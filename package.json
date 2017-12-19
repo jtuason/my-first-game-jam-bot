@@ -1,0 +1,13 @@
+
+{
+  "name": "my-first-game-jam-bot",
+  "version": "0.0.1",
+  "description": "Your sentient friend",
+  "main": "bot.js",
+  "author": "j",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "discord.js": "^11.2.1",
+    "winston": "^2.4.0"
+  }
+}
