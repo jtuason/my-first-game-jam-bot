@@ -11,7 +11,7 @@ client.on('message',message=>{
 	} if(message.content === '!goodbot'){
 		message.channel.send('thank u');
 	} if(message.content === '!help'){
-		message.channel.send(`You can refer to ${introductions} for more info!`);
+		message.channel.send(`Not yet.`);
 	}
 });
 
