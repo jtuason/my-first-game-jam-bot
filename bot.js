@@ -25,7 +25,7 @@ client.on('message',message=>{
 	} if(message.content === '!tumblr'){
 		message.channel.send('Follow us on tumblr at http://myfirstgamejam.tumblr.com/');
 	} if(message.content === '!illmentor'){
-		message.member.addRole('Mentors');
+		message.member.addRole(message.member.guild.roles.find('name','Mentors')).catch(console.error);
 	}
 });
 
