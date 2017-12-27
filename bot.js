@@ -14,6 +14,18 @@ client.on('message',message=>{
 		message.channel.send('Not yet.');
 	} if(message.content === '!faq'){
 		message.channel.send('The jam faq can be found at http://myfirstgamejam.tumblr.com/faq');
+	} if(message.content === '!jampage'){
+		message.channel.send('The jam page can be found at https://itch.io/jam/my-first-game-jam-winter-2018');
+	} if(message.content === '!dates'){
+		message.channel.send('The winter 2018 jam runs from January 5th to the 20th.');
+	} if(message.content === '!community'){
+		message.channel.send('https://itch.io/jam/my-first-game-jam-winter-2018/community');
+	} if(message.content === '!twitter'){
+		message.channel.send('Follow the jam twitter at https://twitter.com/myfirstgamejam');
+	} if(message.content === '!tumblr'){
+		message.channel.send('Follow us on tumblr at http://myfirstgamejam.tumblr.com/');
+	} if(message.content === '!illmentor'){
+		message.member.addRole('Mentors');
 	}
 });
 
