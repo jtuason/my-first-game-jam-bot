@@ -19,7 +19,7 @@ client.on('message',message=>{
 	} if(message.content === '!dates'){
 		message.channel.send('The winter 2018 jam runs from January 5th to the 20th.');
 	} if(message.content === '!signup'){
-		message.channel.send('The sign up form can be found at https://goo.gl/forms/T4npeHGHZT3LkC0E2 Be sure to fill it out sometime before you start!');
+		message.channel.send('The sign up form can be found at https://goo.gl/forms/iA89HT7XM8gW7lHf2 Be sure to fill it out sometime before you start!');
 	} if(message.content === '!community'){
 		message.channel.send('https://itch.io/jam/my-first-game-jam-winter-2018/community');
 	} if(message.content === '!twitter'){
@@ -29,6 +29,12 @@ client.on('message',message=>{
 	} if(message.content === '!illmentor'){
 		message.channel.send('Thank you! Remember to add some roles for yourself!');
 		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
+	} if(message.content === '!test'){
+		for (var m in guild.members){
+			if (target.hasOwnProperty(m)) {
+				m.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
+			}
+		}
 	}
 });
 
@@ -54,7 +60,9 @@ client.on("guildMemberUpdate", (oldMember, newMember)=>{
 	}
 
 	/* if the member has just removed the "member" Role, just re-add it since they need it if they want to add pronouns */
+	/*
 	if(!newMember.roles.exists('name','Member')){
 		newMember.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
 	}
+	*/
 });
