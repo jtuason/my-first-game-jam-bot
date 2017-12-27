@@ -18,6 +18,8 @@ client.on('message',message=>{
 		message.channel.send('The jam page can be found at https://itch.io/jam/my-first-game-jam-winter-2018');
 	} if(message.content === '!dates'){
 		message.channel.send('The winter 2018 jam runs from January 5th to the 20th.');
+	} if(message.content === '!signup'){
+		message.channel.send('The sign up form can be found at https://goo.gl/forms/T4npeHGHZT3LkC0E2 Be sure to fill it out sometime before you start!');
 	} if(message.content === '!community'){
 		message.channel.send('https://itch.io/jam/my-first-game-jam-winter-2018/community');
 	} if(message.content === '!twitter'){
@@ -25,7 +27,8 @@ client.on('message',message=>{
 	} if(message.content === '!tumblr'){
 		message.channel.send('Follow us on tumblr at http://myfirstgamejam.tumblr.com/');
 	} if(message.content === '!illmentor'){
-		message.member.addRole(message.member.guild.roles.find('name','Mentors')).catch(console.error);
+		message.channel.send('Thank you! Remember to add some roles for yourself!');
+		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
 	}
 });
 
@@ -42,16 +45,16 @@ client.on("guildMemberAdd", member =>{
 client.on("guildMemberUpdate", (oldMember, newMember)=>{
 	
 	/* if the member has just added their pronoun Role AND it still has "add pronouns" Role, the bot automatically removes the "add pronouns" Role */
-	if((newMember.roles.exists('name','he/him') ||
-		newMember.roles.exists('name','she/her') ||
-		newMember.roles.exists('name','they/them'))
-		&& oldMember.roles.exists('name','add pronouns')){
+	if((newMember.roles.exists('name','He/him') ||
+		newMember.roles.exists('name','She/her') ||
+		newMember.roles.exists('name','They/them'))
+		&& oldMember.roles.exists('name','Add pronouns')){
 
-		newMember.removeRole(newMember.guild.roles.find('name','add pronouns')).catch(console.error);
+		newMember.removeRole(newMember.guild.roles.find('name','Add pronouns')).catch(console.error);
 	}
 
 	/* if the member has just removed the "member" Role, just re-add it since they need it if they want to add pronouns */
-	if(!newMember.roles.exists('name','member')){
-		newMember.addRole(newMember.guild.roles.find('name','member')).catch(console.error);
+	if(!newMember.roles.exists('name','Member')){
+		newMember.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
 	}
 });
