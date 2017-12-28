@@ -30,9 +30,9 @@ client.on('message',message=>{
 		message.channel.send('Thank you! Remember to add some roles for yourself!');
 		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
 	} if(message.content === '!test'){
-		for (var m in guild.members){
-			if (target.hasOwnProperty(m)) {
-				m.addRole(m.guild.roles.find('name','Member')).catch(console.error);
+		for (var key in guild.members){
+			if (guild.members.hasOwnProperty(key)) {
+				key.addRole(key.guild.roles.find('name','Member')).catch(console.error);
 			}
 		}
 	}
