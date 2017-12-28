@@ -44,8 +44,8 @@ client.login(process.env.BOT_TOKEN);
 /* event: when a new member joins */
 client.on("guildMemberAdd", member =>{
 	/* add "member" and "add pronouns" roles to anyone who joins */
-	member.addRole(member.guild.roles.find('name','member')).catch(console.error);
-	member.addRole(member.guild.roles.find('name','add pronouns')).catch(console.error);
+	member.addRole(member.guild.roles.find('name','Member')).catch(console.error);
+	member.addRole(member.guild.roles.find('name','Add pronouns')).catch(console.error);
 });
 /* event: when a member updates stuff like their roles */
 client.on("guildMemberUpdate", (oldMember, newMember)=>{
