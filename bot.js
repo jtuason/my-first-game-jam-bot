@@ -32,7 +32,7 @@ client.on('message',message=>{
 	} if(message.content === '!test'){
 		for (var m in guild.members){
 			if (target.hasOwnProperty(m)) {
-				m.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
+				m.addRole(m.guild.roles.find('name','Member')).catch(console.error);
 			}
 		}
 	}
