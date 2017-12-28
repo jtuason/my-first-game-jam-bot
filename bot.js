@@ -11,7 +11,7 @@ client.on('message',message=>{
 	} if(message.content === '!goodbot'){
 		message.channel.send('thank u');
 	} if(message.content === '!help'){
-		message.channel.send('Not yet.');
+		message.channel.send('List of commands coming soon!');
 	} if(message.content === '!faq'){
 		message.channel.send('The jam faq can be found at http://myfirstgamejam.tumblr.com/faq');
 	} if(message.content === '!jampage'){
@@ -29,7 +29,7 @@ client.on('message',message=>{
 	} if(message.content === '!illmentor'){
 		message.channel.send('Thank you! Remember to add some roles for yourself!');
 		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
-	} if(message.content === '!test'){
+	} if(message.content === '!addmembers'){
 		let all_members = Array.from(message.guild.members.values());
 		let member_length = all_members.length;
 		for (let i = 0; i < member_length; i++) {
@@ -60,9 +60,7 @@ client.on("guildMemberUpdate", (oldMember, newMember)=>{
 	}
 
 	/* if the member has just removed the "member" Role, just re-add it since they need it if they want to add pronouns */
-	/*
 	if(!newMember.roles.exists('name','Member')){
 		newMember.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
 	}
-	*/
 });
