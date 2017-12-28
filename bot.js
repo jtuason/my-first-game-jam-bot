@@ -33,7 +33,7 @@ client.on('message',message=>{
 		let all_members = Array.from(message.guild.members.values());
 		let member_length = all_members.length;
 		for (let i = 0; i < member_length; i++) {
-			all_members[i].addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
+			all_members[i].addRole(message.guild.roles.find('name','Member')).catch(console.error);
 		}
 	}
 });
