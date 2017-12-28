@@ -32,7 +32,7 @@ client.on('message',message=>{
 	} if(message.content === '!test'){
 		let all_members = message.guild.members.keyArray();
 		let member_length = all_members.length;
-		for (let i = 0; i < arrayLength; i++) {
+		for (let i = 0; i < member_length; i++) {
 			all_members[i].addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
 		}
 	}
