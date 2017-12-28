@@ -30,7 +30,7 @@ client.on('message',message=>{
 		message.channel.send('Thank you! Remember to add some roles for yourself!');
 		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
 	} if(message.content === '!test'){
-		let all_members = message.guild.members.keyArray();
+		let all_members = Array.from(message.guild.members.keys());
 		let member_length = all_members.length;
 		for (let i = 0; i < member_length; i++) {
 			all_members[i].addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
