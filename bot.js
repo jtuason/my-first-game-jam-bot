@@ -1,66 +1,127 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+var Discord = require("discord.js");
+var auth = require('./auth.json');
+var config = require('./config.json');
 
-client.on('ready',()=>{
-	console.log('i am ready!');
+var client = new Discord.Client();
+client.login(auth.token);
+
+client.on('ready', function () {
+    console.log("Connected as " + client.user.id);
+    client.user.setGame("helping out!");
 });
 
-client.on('message',message=>{
-	if(message.content === '!ping'){
-		message.channel.send('pong!');
-	} if(message.content === '!goodbot'){
-		message.channel.send('thank u');
-	} if(message.content === '!help'){
-		message.channel.send('List of commands coming soon!');
-	} if(message.content === '!faq'){
-		message.channel.send('The jam faq can be found at http://myfirstgamejam.tumblr.com/faq');
-	} if(message.content === '!jampage'){
-		message.channel.send('The jam page can be found at https://itch.io/jam/my-first-game-jam-winter-2018');
-	} if(message.content === '!dates'){
-		message.channel.send('The winter 2018 jam runs from January 5th to the 20th.');
-	} if(message.content === '!signup'){
-		message.channel.send('The sign up form can be found at https://goo.gl/forms/iA89HT7XM8gW7lHf2 Be sure to fill it out sometime before you start!');
-	} if(message.content === '!community'){
-		message.channel.send('https://itch.io/jam/my-first-game-jam-winter-2018/community');
-	} if(message.content === '!twitter'){
-		message.channel.send('Follow the jam twitter at https://twitter.com/myfirstgamejam');
-	} if(message.content === '!tumblr'){
-		message.channel.send('Follow us on tumblr at http://myfirstgamejam.tumblr.com/');
-	} if(message.content === '!illmentor'){
-		message.channel.send('Thank you! Remember to add some roles for yourself!');
-		message.member.addRole(message.guild.roles.find('name','Mentors')).catch(console.error);
-	} if(message.content === '!addmembers'){
-		let all_members = Array.from(message.guild.members.values());
-		let member_length = all_members.length;
-		for (let i = 0; i < member_length; i++) {
-			all_members[i].addRole(message.guild.roles.find('name','Member')).catch(console.error);
-		}
-	}
+client.on("message", (message) => {
+    if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  
+    // Seperate command and arguments
+    var args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    var cmd = args.shift().toLowerCase();
+
+    switch (cmd) {
+        case "pronoun" :
+            pronoun(message, args);
+            break;
+        case "mentor" :
+            mentor(message, args);
+            break;
+        case "ping" :
+            message.channel.send("pong! (" + client.ping + ")");
+            break;
+        case "faq" :
+            message.channel.send("http://myfirstgamejam.tumblr.com/faq");
+            break;
+        case "jampage" :
+            message.channel.send("https://itch.io/jam/my-first-game-jam-winter-2018");
+            break;
+        case "dates" :
+            message.channel.send("The Winter 2018 jam runs from January 5th to the 20th.");
+            break;
+        case "signup" :
+            message.channel.send("https://goo.gl/forms/iA89HT7XM8gW7lHf2");
+            break;
+        case "community" :
+            message.channel.send("https://itch.io/jam/my-first-game-jam-winter-2018/community");
+            break;
+        case "twitter" :
+            message.channel.send("https://twitter.com/myfirstgamejam");
+            break;
+        case "tumblr" :
+            message.channel.send("http://myfirstgamejam.tumblr.com");
+            break;
+    }
 });
 
-//client.login(token);
-client.login(process.env.BOT_TOKEN);
-
-/* event: when a new member joins */
-client.on("guildMemberAdd", member =>{
-	/* add "member" and "add pronouns" roles to anyone who joins */
-	member.addRole(member.guild.roles.find('name','Member')).catch(console.error);
-	member.addRole(member.guild.roles.find('name','Add pronouns')).catch(console.error);
+client.on("guildMemberUpdate", (oldMember, newMember) => {
+    // Check if mentoring and add/remove role if needed
+    if(newMember.roles.some(r => config.mentorCategories.includes(r.name))) {
+        newMember.addRole(newMember.guild.roles.find("name", "mentor")).catch(console.error);
+        //console.log(newMember.displayName + " started mentoring!");
+    }
+    else if (newMember.roles.exists("name", "mentor")) {
+        newMember.removeRole(newMember.guild.roles.find("name", "mentor")).catch(console.error);
+        //console.log(newMember.displayName + " stopped mentoring!");
+    }
 });
-/* event: when a member updates stuff like their roles */
-client.on("guildMemberUpdate", (oldMember, newMember)=>{
-	
-	/* if the member has just added their pronoun Role AND it still has "add pronouns" Role, the bot automatically removes the "add pronouns" Role */
-	if((newMember.roles.exists('name','He/him') ||
-		newMember.roles.exists('name','She/her') ||
-		newMember.roles.exists('name','They/them'))
-		&& oldMember.roles.exists('name','Add pronouns')){
 
-		newMember.removeRole(newMember.guild.roles.find('name','Add pronouns')).catch(console.error);
-	}
+function pronoun(message, args) {
+    let [action, pronoun] = args;    
 
-	/* if the member has just removed the "member" Role, just re-add it since they need it if they want to add pronouns */
-	if(!newMember.roles.exists('name','Member')){
-		newMember.addRole(newMember.guild.roles.find('name','Member')).catch(console.error);
-	}
-});
+    // Don't allow usage in DMs
+    if (message.guild == null) return;
+
+    // Handle help action
+    if (action === "help") {
+        message.channel.send(config.availablePronouns.toString());
+        return;
+    }
+
+    // Check if requested pronoun exists and is a valid (Don't allow them to mod themselves)
+    let targetPronoun = message.guild.roles.find("name", `${pronoun}`);
+    if (!targetPronoun || config.availablePronouns.indexOf(`${pronoun}`) == -1) return;
+
+    // Handle actions
+    switch(action) {
+        case "add":
+            message.member.addRole(targetPronoun).catch(console.error);
+            break;
+        case "remove":
+            message.member.removeRole(targetPronoun).catch(console.error);
+            break;
+    }
+
+    message.delete(1);
+}
+
+//todo: allow multiple to be entered at once using commas
+function mentor(message, args) {
+    let [action, category] = args;
+
+    // Don't allow usage in DMs
+    if (message.guild == null) return;
+
+    // Handle other actions
+    switch(action) {
+        case "help":
+            //todo: add help text
+            return;
+        case "stop":
+            //todo: remove all mentor roles from message sender
+            return;
+    }
+
+    // Check if requested category exists and is a valid (Don't allow them to mod themselves)
+    let targetCategory = message.guild.roles.find("name", `${category}`);
+    if (!targetCategory || config.mentorCategories.indexOf(`${category}`) == -1) return;
+
+    // Handle actions
+    switch(action) {
+        case "add":
+            message.member.addRole(targetCategory).catch(console.error);
+            break;
+        case "remove":
+            message.member.removeRole(targetCategory).catch(console.error);
+            break;
+    }
+
+    message.delete(1);
+}

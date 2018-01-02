@@ -1,0 +1,5 @@
+{
+    "prefix": "!",
+    "availablePronouns": ["he/him", "she/her", "they/them"],
+    "mentorCategories": ["unity", "gamemaker", "rpgmaker", "twine", "renpy", "programming", "python", "lua", "pixel-art", "2d-art", "3d-art", "audio", "unreal", "stencyl", "construct-2", "java", "ui", "writing", "animation", "godot", "c-languages", "game-design"]
+}
