@@ -89,7 +89,7 @@ function pronoun(message, args) {
             break;
     }
 
-    message.delete(1);
+    //message.delete(1);
 }
 
 //todo: allow multiple to be entered at once using commas
@@ -123,5 +123,5 @@ function mentor(message, args) {
             break;
     }
 
-    message.delete(1);
+    //message.delete(1);
 }
