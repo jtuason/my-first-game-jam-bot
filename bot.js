@@ -48,6 +48,9 @@ client.on("message", (message) => {
         case "tumblr" :
             message.channel.send("http://myfirstgamejam.tumblr.com");
             break;
+        case "goodbot" :
+            message.channel.send("Thank you!");
+            break;
     }
 });
 
